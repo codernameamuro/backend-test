@@ -1,0 +1,198 @@
+<!-- This is PolyCube Test Frontend -->
+<!-- PORT : 5500 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyUser Test</title>
+</head>
+<body>
+    <h1>PolyUser Test</h1>
+    
+    <h2>Checking not allowed characters</h2>
+    <p>Allowed characters: a-z, A-Z, 0-9, /, ?, &, =, :, //</p>
+    <p>Not allowed characters: !, @, #, $, %, ^, *, (, ), _, +, -, {, }, [, ], |, \, ;, ', ", ,, ., <, ></p>
+    <p>Enter not allowed characters to check if they are included in the input</p>
+    <button onclick="checkNotAllowedCharacters()">Check</button>
+    <div id="notAllowedResult"></div>
+
+    <h2>Not existing path</h2>
+    <p>Try to access a path that does not exist</p>
+    <button onclick="checkNotAllowedCharacters()">Check</button>
+    <div id="notExistingPathResult"></div>
+
+
+    <h2>Get All Users</h2>
+    <button onclick="getAllUsers()">Get All Users</button>
+    <div id="userList"></div>
+
+    <h2>Add New User</h2>
+    <input type="text" id="userName" placeholder="Enter user name">
+    <button onclick="addUser()">Add User</button>
+    <div id="addUserResult"></div>
+
+    <h2>Get User By ID</h2>
+    <input type="text" id="userId" placeholder="Enter user ID">
+    <button onclick="getUserById()">Get User By ID</button>
+    <div id="userById"></div>
+
+    <h2>Update User name By ID</h2>
+    <input type="text" id="updateUserId" placeholder="Enter user ID">
+    <input type="text" id="updateUserName" placeholder="Enter new user name">
+    <button onclick="updateUserById()">Update User By ID</button>
+    <div id="updateUserById"></div>
+
+    <h2>Buy Lotto</h2>
+    <button onclick="buyLotto()">Buy Lotto</button>
+    <div id="buyLottoResult"></div>
+
+
+    <script>
+        const baseUrl = 'http://localhost:8080';  
+
+        async function checkNotAllowedCharacters() {
+            try {
+                const response = await fetch(`${baseUrl}/users/1?name=test!!`);  
+                console.log('Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('notAllowedResult').innerHTML = `Response data: ${JSON.stringify(data)}`;
+            } catch (error) {
+                console.error('Error checking not allowed characters:', error);
+                document.getElementById('notAllowedResult').innerHTML = 'Error checking not allowed characters';
+            }
+        }
+
+        async function checkNotAllowedCharacters() {
+            try {
+                const response = await fetch(`${baseUrl}/notExistingPath`);
+                console.log('Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('notExistingPathResult').innerHTML = `Response data: ${JSON.stringify(data)}`;
+            } catch (error) {
+                console.error('Error fetching not existing path:', error);
+                document.getElementById('notExistingPathResult').innerHTML = 'Error fetching not existing path';
+            }
+        }
+
+        async function getAllUsers() {
+            try {
+                const response = await fetch(`${baseUrl}/users`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('userList').innerHTML = `User IDs: ${data.join(', ')}`;
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                document.getElementById('userList').innerHTML = 'Error fetching users';
+            }
+        }
+        
+        async function addUser() {
+            const userName = document.getElementById('userName').value;
+            if (!userName) {
+                alert('Please enter a user name');
+                return;
+            }
+        
+            try {
+                console.log('Adding user:', userName);
+                const response = await fetch(`${baseUrl}/users`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: userName })
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Response data:', data);
+        
+                    if (data.result === 'success') {
+                        document.getElementById('addUserResult').innerHTML = 'User added successfully';
+                    } else {
+                        document.getElementById('addUserResult').innerHTML = 'Error adding user: ' + data.result;
+                    }
+                } else {
+                    document.getElementById('addUserResult').innerHTML = 'Error adding user: ' + response.statusText;
+                }
+            } catch (error) {
+                console.error('Error adding user:', error);
+                document.getElementById('addUserResult').innerHTML = 'Error adding user';
+            }
+        }             
+    
+        async function getUserById() {
+            const userId = document.getElementById('userId').value;
+            if (!userId) {
+                alert('Please enter a user ID');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${baseUrl}/users/${userId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('userById').innerHTML = `User name: ${data.name}`;
+            } catch (error) {
+                console.error('Error fetching user:', error);
+                document.getElementById('userById').innerHTML = 'Error fetching user';
+            }
+        }
+
+        async function updateUserById() {
+            const userId = document.getElementById('updateUserId').value;
+            const userName = document.getElementById('updateUserName').value;
+            if (!userId || !userName) {
+                alert('Please enter a user ID and user name');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${baseUrl}/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: userName })
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('updateUserById').innerHTML = `User updated: ${data.result}`;
+            } catch (error) {
+                console.error('Error updating user:', error);
+                document.getElementById('updateUserById').innerHTML = 'Error updating user';
+            }
+        }
+    
+        async function buyLotto() {
+            try {
+                const response = await fetch(`${baseUrl}/lottos`, {
+                    method: 'POST'
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                document.getElementById('buyLottoResult').innerHTML = 
+                    `result: ${data.result}, round: ${data.round}, numbers: ${data.numbers}, bonusNumber: ${data.bonusNumber}`;
+            } catch (error) {
+                console.error('Error buying lotto:', error);
+                document.getElementById('buyLottoResult').innerHTML = 'Error buying lotto';
+            }
+        }
+    </script>
+</body>
+</html>
