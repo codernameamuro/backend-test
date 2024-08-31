@@ -3,9 +3,6 @@ package kr.co.polycube.backendtest.Domain.user;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
-import kr.co.polycube.backendtest.Domain.user.PolyUserRepository;
-
-import javax.swing.plaf.synth.SynthUI;
 import java.util.List;
 import java.util.stream.Collectors;
 

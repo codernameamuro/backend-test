@@ -1,14 +1,11 @@
 package kr.co.polycube.backendtest.Domain.lotto;
 
 import kr.co.polycube.backendtest.Domain.lottoPool.PolyLottoPool;
-import kr.co.polycube.backendtest.Domain.lottoPool.PolyLottoPoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.swing.*;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +14,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PolyLottoController {
     private final PolyLottoService polyLottoService;
-    private final PolyLottoPoolService polyLottoPoolService;
 
     /***
      * Description :This method is updating lotto pool

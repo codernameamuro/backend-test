@@ -106,7 +106,7 @@ public class LottoBatchConfig {
             int rank = calculateRank(matchCount, bonusMatch);
 
             if (rank <= 5) {
-                return new Winner(rank, winningNumbers.toString(), polyLotto.getLottoNumbers().toString(), String.valueOf(bonusNumber), currentPool.getRound());
+                return new Winner(rank, polyLotto.getId(), winningNumbers.toString(), polyLotto.getLottoNumbers().toString(), String.valueOf(bonusNumber), currentPool.getRound());
             } else {
                 return null;
             }

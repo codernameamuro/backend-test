@@ -2,10 +2,6 @@ package kr.co.polycube.backendtest.Domain.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import kr.co.polycube.backendtest.Domain.lotto.PolyLotto;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

@@ -1,6 +1,5 @@
 package kr.co.polycube.backendtest;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManagerFactory;
 import kr.co.polycube.backendtest.Domain.lotto.PolyLotto;

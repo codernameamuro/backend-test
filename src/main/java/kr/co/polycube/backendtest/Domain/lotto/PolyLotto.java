@@ -2,7 +2,6 @@ package kr.co.polycube.backendtest.Domain.lotto;
 
 import jakarta.persistence.*;
 import kr.co.polycube.backendtest.Domain.lottoPool.PolyLottoPool;
-import kr.co.polycube.backendtest.Domain.user.PolyUser;
 import lombok.Getter;
 
 import java.util.List;

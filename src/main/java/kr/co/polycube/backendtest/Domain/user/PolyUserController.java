@@ -1,7 +1,6 @@
 package kr.co.polycube.backendtest.Domain.user;
 
 import kr.co.polycube.backendtest.Domain.user.Dto.postUserDto;
-import kr.co.polycube.backendtest.Global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
